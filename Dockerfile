@@ -3,6 +3,7 @@ MAINTAINER Corey Coole
 
 ENV PYTHONUNBUFFERED 1
 
+# Install dependencies
 COPY ./requirements.txt /requirements.txt
 RUN apk add --update --no-cache postgresql-client
 RUN apk add --update --no-cache --virtual .tmp-build-deps \
