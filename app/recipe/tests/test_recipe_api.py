@@ -10,7 +10,7 @@ from core.models import Recipe, Tag, Ingredient
 from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
 
 
-RECIPE_URL = reverse('recipe:recipe-list')
+RECIPES_URL = reverse('recipe:recipe-list')
 
 
 def detail_url(recipe_id):
@@ -48,7 +48,7 @@ class PublicRecipeApiTests(TestCase):
 
     def test_required_auth(self):
         """Test that authentication is required"""
-        res = self.client.get(RECIPE_URL)
+        res = self.client.get(RECIPES_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -69,7 +69,7 @@ class PrivateRecipeApiTests(TestCase):
         sample_recipe(user=self.user)
         sample_recipe(user=self.user)
 
-        res = self.client.get(RECIPE_URL)
+        res = self.client.get(RECIPES_URL)
 
         recipes = Recipe.objects.all().order_by('-id')
         serializer = RecipeSerializer(recipes, many=True)
@@ -85,7 +85,7 @@ class PrivateRecipeApiTests(TestCase):
         sample_recipe(user=user2)
         sample_recipe(user=self.user)
 
-        res = self.client.get(RECIPE_URL)
+        res = self.client.get(RECIPES_URL)
 
         recipes = Recipe.objects.filter(user=self.user)
         serializer = RecipeSerializer(recipes, many=True)
@@ -112,7 +112,7 @@ class PrivateRecipeApiTests(TestCase):
             'time_minutes': 30,
             'price': 5.00
         }
-        res = self.client.post(RECIPE_URL, payload)
+        res = self.client.post(RECIPES_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
@@ -129,7 +129,7 @@ class PrivateRecipeApiTests(TestCase):
             'time_minutes': 60,
             'price': 20.00
         }
-        res = self.client.post(RECIPE_URL, payload)
+        res = self.client.post(RECIPES_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
@@ -148,8 +148,8 @@ class PrivateRecipeApiTests(TestCase):
             'time_miuntes': 20,
             'price': 7.00
         }
-        
-        res = self.client.post(RECIPE_URL, payload)
+
+        res = self.client.post(RECIPES_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
