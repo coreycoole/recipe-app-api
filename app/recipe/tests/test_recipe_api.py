@@ -164,13 +164,13 @@ class PrivateRecipeApiTests(TestCase):
         recipe.tags.add(sample_tag(user=self.user))
         new_tag = sample_tag(user=self.user, name='Curry')
 
-        payload = {'title': 'Chicken tikka ', 'tags': [new_tag.id]}
+        payload = {'title': 'Chicken tikka', 'tags': [new_tag.id]}
         url = detail_url(recipe.id)
         self.client.patch(url, payload)
 
         recipe.refresh_from_db()
-        self.assertEqual(recipe.title, payload.title)
-        tags.recipe.tags.all()
+        self.assertEqual(recipe.title, payload['title'])
+        tags = recipe.tags.all()
         self.assertEqual(len(tags), 1)
         self.assertIn(new_tag, tags)
 
@@ -178,13 +178,14 @@ class PrivateRecipeApiTests(TestCase):
         """Test updating a recipe with put"""
         recipe = sample_recipe(user=self.user)
         recipe.tags.add(sample_tag(user=self.user))
+
         payload = {
             'title': 'Spaghetti carbonara',
             'time_minutes': 25,
             'price': 5.00
         }
         url = detail_url(recipe.id)
-        self.client.put(payload)
+        self.client.put(url, payload)
 
         recipe.refresh_from_db()
         self.assertEqual(recipe.title, payload['title'])
