@@ -33,7 +33,7 @@ def sample_recipe(user, **params):
     defaults = {
         'title': 'Sample recipe',
         'time_minutes': 10,
-        'price': 5.00
+        'price': 5.00,
     }
     defaults.update(params)
 
@@ -108,7 +108,7 @@ class PrivateRecipeApiTests(TestCase):
     def test_create_basic_recipe(self):
         """Test creating recipe"""
         payload = {
-            'title': 'Chocolate Cheescake',
+            'title': 'Chocolate Cheesecake',
             'time_minutes': 30,
             'price': 5.00
         }
@@ -145,7 +145,7 @@ class PrivateRecipeApiTests(TestCase):
         payload = {
             'title': 'Thai Prawn red Curry',
             'ingredients': [ingredient1.id, ingredient2.id],
-            'time_miuntes': 20,
+            'time_minutes': 20,
             'price': 7.00
         }
 
