@@ -46,7 +46,7 @@ class PublicRecipeApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-    def test_auth_required(self):
+    def test_required_auth(self):
         """Test that authentication is required"""
         res = self.client.get(RECIPE_URL)
 
@@ -119,7 +119,7 @@ class PrivateRecipeApiTests(TestCase):
         for key in payload.keys():
             self.assertEqual(payload[key], getattr(recipe, key))
 
-    def test_create_recipe_wit_tags(self):
+    def test_create_recipe_with_tags(self):
         """Test creating recipe with tags"""
         tag1 = sample_tag(user=self.user, name='Vegan')
         tag2 = sample_tag(user=self.user, name='Dessert')
@@ -148,6 +148,7 @@ class PrivateRecipeApiTests(TestCase):
             'time_miuntes': 20,
             'price': 7.00
         }
+        
         res = self.client.post(RECIPE_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)

@@ -37,8 +37,8 @@ class IngredientViewSet(BaseRecipeAttrViewSet):
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """Manage recipes in the database"""
-    queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeSerializer
+    queryset = Recipe.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
