@@ -135,22 +135,19 @@ class PrivateUserApiTests(TestCase):
             'email': self.user.email,
         })
 
-        def test_post_me_not_aloowed(self):
-            """Test that post is not allowed on me url"""
-            res = self.client.post(ME_URL, {})
+    def test_post_me_not_allowed(self):
+        """Test that post is not allowed on me url"""
+        res = self.client.post(ME_URL, {})
 
-            self.assertEqual(
-                res.status_code,
-                status.HTTP_405_METHOD_NOT_ALLOWED
-            )
+        self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-        def test_update_user_profile(self):
-            """Test updating the user profile for authenticated user"""
-            payload = {'name': 'new name', 'password': 'newpassword123'}
+    def test_update_user_profile(self):
+        """Test updating the user profile for authenticated user"""
+        payload = {'name': 'new name', 'password': 'newpassword123'}
 
-            res = self.client.patch(ME_URL, payload)
+        res = self.client.patch(ME_URL, payload)
 
-            self.user.refresh_from_db()
-            self.assertEqual(self.user.name, payload['name'])
-            self.assertTrue(self.user.check_password(payload['password']))
-            self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.name, payload['name'])
+        self.assertTrue(self.user.check_password(payload['password']))
+        self.assertEqual(res.status_code, status.HTTP_200_OK)

@@ -103,7 +103,7 @@ class PrivateTagsApiTests(TestCase):
         self.assertNotIn(serializer2.data, res.data)
 
     def test_retrienve_tags_assigned_unique(self):
-        """Test filtering tags by assigned returns uique items"""
+        """Test filtering tags by assigned returns unique items"""
         tag = Tag.objects.create(user=self.user, name='Breakfast')
         Tag.objects.create(user=self.user, name='Lunch')
 
