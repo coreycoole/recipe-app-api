@@ -90,11 +90,11 @@ class PrivateTagsApiTests(TestCase):
             title='Coriander eggs on toast',
             time_minutes=10,
             price=5.00,
-            user=self.user
+            user=self.user,
             )
         recipe.tags.add(tag1)
 
-        res = self.client.post(TAGS_URL, {'assigned_only': 1})
+        res = self.client.get(TAGS_URL, {'assigned_only': 1})
 
         serializer1 = TagSerializer(tag1)
         serializer2 = TagSerializer(tag2)
@@ -121,7 +121,7 @@ class PrivateTagsApiTests(TestCase):
             price=2.00,
             user=self.user
             )
-        recipe1.tags.add(tag)
+        recipe2.tags.add(tag)
 
         res = self.client.get(TAGS_URL, {'assigned_only': 1})
 
